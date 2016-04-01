@@ -2,7 +2,7 @@
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-A simple to setup/use means of forcing/recommending app updates in iOS.
+A simple framework to help recommend/force app updates and sunset old versions
 
 ## Installation
 
@@ -12,6 +12,14 @@ Add the following to your Cartfile:
 
 ```
 github "pseudomuto/Retired" ~> 0.0
+```
+
+### Cocoapods
+
+Add this to your Podfile:
+
+```
+pod "Retired", "~> 0.0"
 ```
 
 ### Swift Package Manager
