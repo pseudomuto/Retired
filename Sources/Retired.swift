@@ -15,8 +15,8 @@ public class Retired {
     let service = DownloadService(url: url)
 
     service.fetch() { versionFile, error in
-      if let error = error {
-        completion(false, nil, error)
+      guard error == nil else {
+        completion(false, nil, error!)
         return
       }
 
