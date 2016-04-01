@@ -23,7 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applicationDidBecomeActive(application: UIApplication) {
-    Retired.check(versionURL) { shouldUpdate, message, error in
+    Retired.check(versionURL) { updateRequired, message, error in
+      guard updateRequired else { return }
+
+      // handle error (non 200 status or network issue)
+
       if let message = message {
         message.presentInController(application.keyWindow?.rootViewController)
       }

@@ -77,6 +77,7 @@
 		0AB342B91CADF72300A239ED /* DownloadServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadServiceTests.swift; sourceTree = "<group>"; };
 		0AB342BB1CAEFE6B00A239ED /* VersionsWithoutCurrent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VersionsWithoutCurrent.json; sourceTree = "<group>"; };
 		0AB342BD1CAEFEF700A239ED /* VersionsRecommendUpdate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VersionsRecommendUpdate.json; sourceTree = "<group>"; };
+		0AB342E01CAF09B900A239ED /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +141,7 @@
 			children = (
 				0A1280CF1CAC976800BE32F7 /* Cartfile */,
 				0A1280D01CAC976800BE32F7 /* Cartfile.private */,
+				0AB342E01CAF09B900A239ED /* Package.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
