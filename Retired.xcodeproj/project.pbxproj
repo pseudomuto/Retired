@@ -11,6 +11,22 @@
 		0A1280F11CAC9DA300BE32F7 /* Retired.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1280EF1CAC9DA300BE32F7 /* Retired.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A1280F51CACA1C200BE32F7 /* Retired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1280F41CACA1C200BE32F7 /* Retired.swift */; };
 		0A1280FC1CACA7C200BE32F7 /* RetiredTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1280FB1CACA7C200BE32F7 /* RetiredTests.swift */; };
+		0A1280FE1CACAC5E00BE32F7 /* Versions.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A1280FD1CACAC5E00BE32F7 /* Versions.json */; };
+		0A1281001CACACCD00BE32F7 /* Nocilla.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1280FF1CACACCD00BE32F7 /* Nocilla.framework */; };
+		0A1281031CACAE4700BE32F7 /* Nocilla.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A1280FF1CACACCD00BE32F7 /* Nocilla.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0A1281061CAD8EA300BE32F7 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1281051CAD8EA300BE32F7 /* Version.swift */; };
+		0A1281091CAD8FFB00BE32F7 /* VersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1281081CAD8FFB00BE32F7 /* VersionTests.swift */; };
+		0A12810B1CAD95BC00BE32F7 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A12810A1CAD95BC00BE32F7 /* Message.swift */; };
+		0A12810D1CAD971300BE32F7 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A12810C1CAD971300BE32F7 /* MessageTests.swift */; };
+		0A12810F1CAD97DC00BE32F7 /* RecommendedMessage.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A12810E1CAD97DC00BE32F7 /* RecommendedMessage.json */; };
+		0A1281111CAD994400BE32F7 /* ForcedMessage.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A1281101CAD994400BE32F7 /* ForcedMessage.json */; };
+		0A1281131CAD99B000BE32F7 /* VersionFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1281121CAD99B000BE32F7 /* VersionFile.swift */; };
+		0AB342B21CADA25F00A239ED /* VersionFileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB342B11CADA25F00A239ED /* VersionFileTests.swift */; };
+		0AB342B41CADF40B00A239ED /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB342B31CADF40B00A239ED /* Helpers.swift */; };
+		0AB342B71CADF59100A239ED /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB342B61CADF59100A239ED /* DownloadService.swift */; };
+		0AB342BA1CADF72300A239ED /* DownloadServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB342B91CADF72300A239ED /* DownloadServiceTests.swift */; };
+		0AB342BC1CAEFE6B00A239ED /* VersionsWithoutCurrent.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AB342BB1CAEFE6B00A239ED /* VersionsWithoutCurrent.json */; };
+		0AB342BE1CAEFEF700A239ED /* VersionsRecommendUpdate.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AB342BD1CAEFEF700A239ED /* VersionsRecommendUpdate.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,6 +39,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0A1281021CACAE3A00BE32F7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0A1281031CACAE4700BE32F7 /* Nocilla.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0A1280CF1CAC976800BE32F7 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		0A1280D01CAC976800BE32F7 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
@@ -33,6 +62,21 @@
 		0A1280F21CAC9DCE00BE32F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A1280F41CACA1C200BE32F7 /* Retired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Retired.swift; sourceTree = "<group>"; };
 		0A1280FB1CACA7C200BE32F7 /* RetiredTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetiredTests.swift; sourceTree = "<group>"; };
+		0A1280FD1CACAC5E00BE32F7 /* Versions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Versions.json; sourceTree = "<group>"; };
+		0A1280FF1CACACCD00BE32F7 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/iOS/Nocilla.framework; sourceTree = "<group>"; };
+		0A1281051CAD8EA300BE32F7 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		0A1281081CAD8FFB00BE32F7 /* VersionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionTests.swift; sourceTree = "<group>"; };
+		0A12810A1CAD95BC00BE32F7 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		0A12810C1CAD971300BE32F7 /* MessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTests.swift; sourceTree = "<group>"; };
+		0A12810E1CAD97DC00BE32F7 /* RecommendedMessage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RecommendedMessage.json; sourceTree = "<group>"; };
+		0A1281101CAD994400BE32F7 /* ForcedMessage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ForcedMessage.json; sourceTree = "<group>"; };
+		0A1281121CAD99B000BE32F7 /* VersionFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionFile.swift; sourceTree = "<group>"; };
+		0AB342B11CADA25F00A239ED /* VersionFileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionFileTests.swift; sourceTree = "<group>"; };
+		0AB342B31CADF40B00A239ED /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		0AB342B61CADF59100A239ED /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
+		0AB342B91CADF72300A239ED /* DownloadServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadServiceTests.swift; sourceTree = "<group>"; };
+		0AB342BB1CAEFE6B00A239ED /* VersionsWithoutCurrent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VersionsWithoutCurrent.json; sourceTree = "<group>"; };
+		0AB342BD1CAEFEF700A239ED /* VersionsRecommendUpdate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VersionsRecommendUpdate.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +92,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A1280E11CAC97AF00BE32F7 /* Retired.framework in Frameworks */,
+				0A1281001CACACCD00BE32F7 /* Nocilla.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,12 +106,15 @@
 				0A1280CD1CAC973B00BE32F7 /* Tests */,
 				0A1280CE1CAC974500BE32F7 /* Supporting Files */,
 				0A1280D71CAC97AF00BE32F7 /* Products */,
+				0A1281011CACAD0A00BE32F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		0A1280CC1CAC973B00BE32F7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				0A1281041CAD8E8F00BE32F7 /* Models */,
+				0AB342B51CADF56700A239ED /* Services */,
 				0A1280EE1CAC9DA300BE32F7 /* Info.plist */,
 				0A1280EF1CAC9DA300BE32F7 /* Retired.h */,
 				0A1280F41CACA1C200BE32F7 /* Retired.swift */,
@@ -77,9 +125,12 @@
 		0A1280CD1CAC973B00BE32F7 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				0A1281071CAD8FE700BE32F7 /* Models */,
+				0AB342B81CADF70D00A239ED /* Services */,
 				0A1280FA1CACA4EB00BE32F7 /* Fixtures */,
 				0A1280F21CAC9DCE00BE32F7 /* Info.plist */,
 				0A1280FB1CACA7C200BE32F7 /* RetiredTests.swift */,
+				0AB342B31CADF40B00A239ED /* Helpers.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -105,8 +156,57 @@
 		0A1280FA1CACA4EB00BE32F7 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				0A1281101CAD994400BE32F7 /* ForcedMessage.json */,
+				0A12810E1CAD97DC00BE32F7 /* RecommendedMessage.json */,
+				0A1280FD1CACAC5E00BE32F7 /* Versions.json */,
+				0AB342BD1CAEFEF700A239ED /* VersionsRecommendUpdate.json */,
+				0AB342BB1CAEFE6B00A239ED /* VersionsWithoutCurrent.json */,
 			);
 			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		0A1281011CACAD0A00BE32F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A1280FF1CACACCD00BE32F7 /* Nocilla.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0A1281041CAD8E8F00BE32F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0A12810A1CAD95BC00BE32F7 /* Message.swift */,
+				0A1281051CAD8EA300BE32F7 /* Version.swift */,
+				0A1281121CAD99B000BE32F7 /* VersionFile.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		0A1281071CAD8FE700BE32F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0A12810C1CAD971300BE32F7 /* MessageTests.swift */,
+				0A1281081CAD8FFB00BE32F7 /* VersionTests.swift */,
+				0AB342B11CADA25F00A239ED /* VersionFileTests.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		0AB342B51CADF56700A239ED /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0AB342B61CADF59100A239ED /* DownloadService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		0AB342B81CADF70D00A239ED /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0AB342B91CADF72300A239ED /* DownloadServiceTests.swift */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,6 +249,7 @@
 				0A1280DC1CAC97AF00BE32F7 /* Sources */,
 				0A1280DD1CAC97AF00BE32F7 /* Frameworks */,
 				0A1280DE1CAC97AF00BE32F7 /* Resources */,
+				0A1281021CACAE3A00BE32F7 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -208,6 +309,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AB342BE1CAEFEF700A239ED /* VersionsRecommendUpdate.json in Resources */,
+				0A12810F1CAD97DC00BE32F7 /* RecommendedMessage.json in Resources */,
+				0A1280FE1CACAC5E00BE32F7 /* Versions.json in Resources */,
+				0A1281111CAD994400BE32F7 /* ForcedMessage.json in Resources */,
+				0AB342BC1CAEFE6B00A239ED /* VersionsWithoutCurrent.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +341,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AB342B71CADF59100A239ED /* DownloadService.swift in Sources */,
+				0A12810B1CAD95BC00BE32F7 /* Message.swift in Sources */,
+				0A1281061CAD8EA300BE32F7 /* Version.swift in Sources */,
+				0A1281131CAD99B000BE32F7 /* VersionFile.swift in Sources */,
 				0A1280F51CACA1C200BE32F7 /* Retired.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,6 +353,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A1281091CAD8FFB00BE32F7 /* VersionTests.swift in Sources */,
+				0A12810D1CAD971300BE32F7 /* MessageTests.swift in Sources */,
+				0AB342B21CADA25F00A239ED /* VersionFileTests.swift in Sources */,
+				0AB342BA1CADF72300A239ED /* DownloadServiceTests.swift in Sources */,
+				0AB342B41CADF40B00A239ED /* Helpers.swift in Sources */,
 				0A1280FC1CACA7C200BE32F7 /* RetiredTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +519,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -453,6 +572,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -491,6 +614,7 @@
 				0A1280EA1CAC97AF00BE32F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A1280EB1CAC97AF00BE32F7 /* Build configuration list for PBXNativeTarget "Retired iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +623,7 @@
 				0A1280ED1CAC97AF00BE32F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0A1280D51CAC97AF00BE32F7"
-               BuildableName = "Retired iOS.framework"
+               BuildableName = "Retired.framework"
                BlueprintName = "Retired iOS"
                ReferencedContainer = "container:Retired.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0A1280D51CAC97AF00BE32F7"
-            BuildableName = "Retired iOS.framework"
+            BuildableName = "Retired.framework"
             BlueprintName = "Retired iOS"
             ReferencedContainer = "container:Retired.xcodeproj">
          </BuildableReference>
@@ -65,7 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0A1280D51CAC97AF00BE32F7"
-            BuildableName = "Retired iOS.framework"
+            BuildableName = "Retired.framework"
             BlueprintName = "Retired iOS"
             ReferencedContainer = "container:Retired.xcodeproj">
          </BuildableReference>
@@ -83,7 +83,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0A1280D51CAC97AF00BE32F7"
-            BuildableName = "Retired iOS.framework"
+            BuildableName = "Retired.framework"
             BlueprintName = "Retired iOS"
             ReferencedContainer = "container:Retired.xcodeproj">
          </BuildableReference>

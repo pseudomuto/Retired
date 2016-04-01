@@ -6,19 +6,37 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
-import Foundation
+public class Retired {
+  static var bundle            = NSBundle.mainBundle()
+  static let errorDomain       = "RetiredError"
+  static let errorCodeNotFound = 1
 
-public struct Retired {
-  static let timeout: NSTimeInterval  = 20;
- 
-  static var sessionConfig: NSURLSessionConfiguration = {
-    let session                        = NSURLSessionConfiguration.ephemeralSessionConfiguration()
-    session.HTTPCookieAcceptPolicy     = .Never
-    session.HTTPCookieStorage          = nil
-    session.HTTPShouldSetCookies       = false
-    session.timeoutIntervalForRequest  = timeout
-    session.timeoutIntervalForResource = timeout
+  public static func check(url: NSURL, completion: (Bool, Message?, NSError?) -> Void) {
+    let service = DownloadService(url: url)
 
-    return session
-  }()
+    service.fetch() { versionFile, error in
+      if let error = error {
+        completion(false, nil, error)
+        return
+      }
+
+      let file     = versionFile!
+      let version  = bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+      let versions = file.versions.map { $0.versionString }
+
+      guard let index = versions.indexOf(version) else {
+        completion(false, nil, NSError(domain: errorDomain, code: errorCodeNotFound, userInfo: nil))
+        return
+      }
+
+      switch file.versions[index].policy {
+      case .Force:
+        completion(true, file.forcedMessage, nil)
+      case .Recommend:
+        completion(true, file.recommendedMessage, nil)
+      case .None:
+        completion(false, nil, nil)
+      }
+    }
+  }
 }

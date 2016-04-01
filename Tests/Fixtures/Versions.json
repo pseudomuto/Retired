@@ -1,0 +1,20 @@
+{
+  "messaging": {
+    "forced": {
+      "title": "App Update Required",
+      "message": "A new version of the app is available. You need to update now",
+      "continueButtonText": "Let's do this"
+    },
+    "recommended": {
+      "title": "App Update Available",
+      "message": "A new version is available. Want it?",
+      "continueButtonText": "I want it",
+      "cancelButtonText": "No thanks"
+    }
+  },
+  "versions": [
+    { "version": "1.0", "policy": "force" },
+    { "version": "1.1", "policy": "recommend" },
+    { "version": "2.0", "policy": "none" }
+  ]
+}
