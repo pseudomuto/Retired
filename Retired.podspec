@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author   = { "pseudomuto" => "david.muto@gmail.com" }
 
   s.source       = { git: "https://github.com/pseudomuto/Retired.git", tag: s.version.to_s }
-  s.source_files = "Sources/**/*"
+  s.source_files = "Sources/**/*", "LICENSE"
 
   s.ios.deployment_target = "8.0"
   s.requires_arc = true
