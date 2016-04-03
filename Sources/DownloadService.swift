@@ -22,7 +22,7 @@ private let session: NSURLSession = {
   return NSURLSession(configuration: config)
 }()
 
-class DownloadService {
+internal class DownloadService {
   typealias VersionBlock = (VersionFile?, NSError?) -> Void
 
   private struct Constants {

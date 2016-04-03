@@ -12,10 +12,10 @@ import XCTest
 
 class RetiredTests: XCTestCase {
   let versionURL = "https://example.com/versions.json"
+  let bundle = NSBundle(forClass: RetiredTests.self)
 
   override func setUp() {
     LSNocilla.sharedInstance().start()
-    Retired.bundle = NSBundle(forClass: RetiredTests.self)
   }
 
   override func tearDown() {
@@ -73,7 +73,7 @@ class RetiredTests: XCTestCase {
   private func assertResult(completion: (Bool, Message?, NSError?) -> Void) {
     let expectation = expectationWithDescription("Check")
 
-    Retired.check(NSURL(string: versionURL)!) { shouldUpdate, message, error in
+    Retired.check(NSURL(string: versionURL)!, bundle: bundle) { shouldUpdate, message, error in
       completion(shouldUpdate, message, error)
       expectation.fulfill()
     }

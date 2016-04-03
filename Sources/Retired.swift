@@ -6,37 +6,39 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
-public class Retired {
-  static var bundle            = NSBundle.mainBundle()
-  static let errorDomain       = "RetiredError"
-  static let errorCodeNotFound = 1
+public typealias RetiredCompletion = (Bool, Message?, NSError?) -> Void
 
-  public static func check(url: NSURL, completion: (Bool, Message?, NSError?) -> Void) {
+public class Retired {
+  internal static let errorDomain       = "RetiredError"
+  internal static let errorCodeNotFound = 1
+
+  public static func check(url: NSURL, bundle: NSBundle = NSBundle.mainBundle(), completion: RetiredCompletion) {
     let service = DownloadService(url: url)
 
     service.fetch() { versionFile, error in
       guard error == nil else {
-        completion(false, nil, error!)
+        handleError(error!, completion: completion)
         return
       }
 
-      let file     = versionFile!
-      let version  = bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-      let versions = file.versions.map { $0.versionString }
+      let file    = versionFile!
+      let version = bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
 
-      guard let index = versions.indexOf(version) else {
-        completion(false, nil, NSError(domain: errorDomain, code: errorCodeNotFound, userInfo: nil))
+      guard let definition = file.findVersion(version) else {
+        handleError(versionNotFoundError(), completion: completion)
         return
       }
 
-      switch file.versions[index].policy {
-      case .Force:
-        completion(true, file.forcedMessage, nil)
-      case .Recommend:
-        completion(true, file.recommendedMessage, nil)
-      case .None:
-        completion(false, nil, nil)
-      }
+      let message = file.messageForVersion(definition)
+      completion(message != nil, message, nil)
     }
+  }
+
+  private static func handleError(error: NSError, completion: RetiredCompletion) {
+    completion(false, nil, error)
+  }
+
+  private static func versionNotFoundError() -> NSError {
+    return NSError(domain: errorDomain, code: errorCodeNotFound, userInfo: nil)
   }
 }
