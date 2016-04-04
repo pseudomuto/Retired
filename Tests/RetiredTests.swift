@@ -6,84 +6,45 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
-import Nocilla
 @testable import Retired
 import XCTest
 
 class RetiredTests: XCTestCase {
-  let versionURL = "https://example.com/versions.json"
-  let bundle = NSBundle(forClass: RetiredTests.self)
+  var fetcher = TestFetcher()
 
   override func setUp() {
-    LSNocilla.sharedInstance().start()
+    Retired.fetcher = fetcher
   }
 
   override func tearDown() {
-    LSNocilla.sharedInstance().stop()
+    Retired.nextRequestDate.clear()
   }
 
-  func test_Check_When_Forced_Update_Required() {
-    stubVersionsWith("Versions")
+  func test_Check_When_Not_Configured() {
+    Retired.fetcher = nil
 
-    assertResult { shouldUpdate, message, error in
-      XCTAssertTrue(shouldUpdate)
-      XCTAssertNotNil(message)
-      XCTAssertNil(error)
-
-      XCTAssertEqual("A new version of the app is available. You need to update now", message!.message)
+    XCTAssertThrows(RetiredError.NotConfigured) {
+      try Retired.check() { _, _, _ in }
     }
   }
 
-
-  func test_Check_When_Update_Recommended() {
-    stubVersionsWith("VersionsRecommendUpdate")
-
-    assertResult { shouldUpdate, message, error in
-      XCTAssertTrue(shouldUpdate)
-      XCTAssertNotNil(message)
-      XCTAssertNil(error)
-
-      XCTAssertEqual("A new version is available. Want it?", message!.message)
-    }
+  func test_Check_When_Not_Supressed_Calls_The_Fetcher() {
+    try! Retired.check() { _, _, _ in }
+    XCTAssertTrue(fetcher.called)
   }
 
-  func test_Check_When_Current_Version_Not_Found() {
-    stubVersionsWith("VersionsWithoutCurrent")
+  func test_Check_When_Supressed_Skips_The_Call() {
+    Retired.supressUntil(NSDate(timeIntervalSinceNow: 5000))
 
-    assertResult { shouldUpdate, message, error in
-      XCTAssertFalse(shouldUpdate)
-      XCTAssertNil(message)
-      XCTAssertNotNil(error)
-
-      XCTAssertEqual(Retired.errorDomain, error!.domain)
-      XCTAssertEqual(Retired.errorCodeNotFound, error!.code)
-    }
+    try! Retired.check() { _, _, _ in }
+    XCTAssertFalse(fetcher.called)
   }
 
-  func test_Check_When_Error_Occurs() {
-    stubRequest("GET", versionURL).andFailWithError(NSError(domain: "err", code: 1, userInfo: nil))
+  class TestFetcher: FileFetcher {
+    private(set) var called = false
 
-    assertResult { shouldUpdate, message, error in
-      XCTAssertFalse(shouldUpdate)
-      XCTAssertNil(message)
-      XCTAssertNotNil(error)
+    func check(completion: RetiredCompletion) {
+      called = true
     }
-  }
-
-  private func assertResult(completion: (Bool, Message?, NSError?) -> Void) {
-    let expectation = expectationWithDescription("Check")
-
-    Retired.check(NSURL(string: versionURL)!, bundle: bundle) { shouldUpdate, message, error in
-      completion(shouldUpdate, message, error)
-      expectation.fulfill()
-    }
-
-    waitForExpectationsWithTimeout(0.5, handler: nil)
-  }
-
-  private func stubVersionsWith(name: String) {
-    stubRequest("GET", versionURL)
-      .andReturn(200)
-      .withBody(String(data: fixtureData(name), encoding: NSUTF8StringEncoding))
   }
 }

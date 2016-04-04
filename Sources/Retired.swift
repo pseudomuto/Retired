@@ -8,37 +8,37 @@
 
 public typealias RetiredCompletion = (Bool, Message?, NSError?) -> Void
 
+public let RetiredErrorDomain = "RetiredError"
+
+public enum RetiredError: ErrorType {
+  case NotConfigured
+}
+
 public class Retired {
-  internal static let errorDomain       = "RetiredError"
-  internal static let errorCodeNotFound = 1
+  internal static var fetcher: FileFetcher?
+  internal static var nextRequestDate = StoredSetting<NSDate>("nextRequestDate")
 
-  public static func check(url: NSURL, bundle: NSBundle = NSBundle.mainBundle(), completion: RetiredCompletion) {
-    let service = DownloadService(url: url)
+  public static func configure(url: NSURL, bundle: NSBundle = NSBundle.mainBundle()) {
+    fetcher = Fetcher(url, bundle: bundle)
+  }
 
-    service.fetch() { versionFile, error in
-      guard error == nil else {
-        handleError(error!, completion: completion)
-        return
-      }
+  public static func check(completion: RetiredCompletion) throws {
+    guard shouldPerformCheck() else { return }
+    guard let fetcher = fetcher else { throw RetiredError.NotConfigured }
 
-      let file    = versionFile!
-      let version = bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+    nextRequestDate.clear()
+    fetcher.check(completion)
+  }
 
-      guard let definition = file.findVersion(version) else {
-        handleError(versionNotFoundError(), completion: completion)
-        return
-      }
+  public static func supressUntil(date: NSDate) {
+    nextRequestDate.value = date
+  }
 
-      let message = file.messageForVersion(definition)
-      completion(message != nil, message, nil)
+  private static func shouldPerformCheck() -> Bool {
+    if let supressionDate = nextRequestDate.value {
+      return supressionDate.compare(NSDate()) != .OrderedDescending
     }
-  }
 
-  private static func handleError(error: NSError, completion: RetiredCompletion) {
-    completion(false, nil, error)
-  }
-
-  private static func versionNotFoundError() -> NSError {
-    return NSError(domain: errorDomain, code: errorCodeNotFound, userInfo: nil)
+    return true
   }
 }

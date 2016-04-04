@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import XCTest
 
 func fixtureData(name: String) -> NSData {
   let bundle = NSBundle(forClass: MessageTests.self)
@@ -18,4 +19,16 @@ func fixtureData(name: String) -> NSData {
 func jsonFixture(name: String) -> AnyObject {
   let data = fixtureData(name)
   return try! NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+}
+
+func XCTAssertThrows<T: ErrorType>(error: T, expression: () throws -> Void) {
+  do {
+    try expression()
+  }
+  catch let err as T {
+    XCTAssertNotNil(err)
+  }
+  catch let err {
+    XCTFail("Expected \(T.self), but got \(err.dynamicType)")
+  }
 }

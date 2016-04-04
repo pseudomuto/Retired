@@ -29,6 +29,8 @@
 		0AB342BE1CAEFEF700A239ED /* VersionsRecommendUpdate.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AB342BD1CAEFEF700A239ED /* VersionsRecommendUpdate.json */; };
 		0AB342E51CB163F200A239ED /* StoredSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB342E41CB163F200A239ED /* StoredSetting.swift */; };
 		0AB342E71CB1672000A239ED /* StoredSettingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB342E61CB1672000A239ED /* StoredSettingTests.swift */; };
+		0AB342E91CB2A7CD00A239ED /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB342E81CB2A7CD00A239ED /* Fetcher.swift */; };
+		0AB342EB1CB2AA1500A239ED /* FetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB342EA1CB2AA1500A239ED /* FetcherTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,8 @@
 		0AB342E01CAF09B900A239ED /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		0AB342E41CB163F200A239ED /* StoredSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoredSetting.swift; sourceTree = "<group>"; };
 		0AB342E61CB1672000A239ED /* StoredSettingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoredSettingTests.swift; sourceTree = "<group>"; };
+		0AB342E81CB2A7CD00A239ED /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
+		0AB342EA1CB2AA1500A239ED /* FetcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetcherTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				0AB342B61CADF59100A239ED /* DownloadService.swift */,
+				0AB342E81CB2A7CD00A239ED /* Fetcher.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				0AB342B91CADF72300A239ED /* DownloadServiceTests.swift */,
+				0AB342EA1CB2AA1500A239ED /* FetcherTests.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -349,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AB342E91CB2A7CD00A239ED /* Fetcher.swift in Sources */,
 				0AB342B71CADF59100A239ED /* DownloadService.swift in Sources */,
 				0A12810B1CAD95BC00BE32F7 /* Message.swift in Sources */,
 				0AB342E51CB163F200A239ED /* StoredSetting.swift in Sources */,
@@ -363,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A1281091CAD8FFB00BE32F7 /* VersionTests.swift in Sources */,
+				0AB342EB1CB2AA1500A239ED /* FetcherTests.swift in Sources */,
 				0A12810D1CAD971300BE32F7 /* MessageTests.swift in Sources */,
 				0AB342B21CADA25F00A239ED /* VersionFileTests.swift in Sources */,
 				0AB342BA1CADF72300A239ED /* DownloadServiceTests.swift in Sources */,
