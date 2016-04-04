@@ -24,21 +24,21 @@ class StoredSettingTests: XCTestCase {
     settingsContainer.synchronize()
   }
 
-  func test_Get_Value_Pulls_From_Container() {
+  func testGetValuePullsFromContainer() {
     settingsContainer.setObject("My Value", forKey: settingKey)
     XCTAssertEqual("My Value", storedProp.value)
   }
 
-  func test_Get_Value_When_Nil_Returns_Nil() {
+  func testGetValueWhenNilReturnsNil() {
     XCTAssertNil(storedProp.value)
   }
 
-  func test_Set_Value_Stores_Value_In_Container() {
+  func testSetValueStoresValueInContainer() {
     storedProp.value = "value"
     XCTAssertEqual("value", settingsContainer.stringForKey(settingKey))
   }
 
-  func test_Set_Value_To_Nil_Removes_Object_From_Container() {
+  func testSetValueToNilRemovesObjectFromContainer() {
     storedProp.value = "value"
     XCTAssertTrue(settingsContainer.dictionaryRepresentation().keys.contains(settingKey))
 
@@ -46,7 +46,7 @@ class StoredSettingTests: XCTestCase {
     XCTAssertFalse(settingsContainer.dictionaryRepresentation().keys.contains(settingKey))
   }
 
-  func test_Clear_Removes_Object_From_Container() {
+  func testClearRemovesObjectFromContainer() {
     storedProp.value = "value"
     storedProp.clear()
 

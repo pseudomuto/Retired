@@ -24,7 +24,7 @@ class DownloadServiceTests: XCTestCase {
     LSNocilla.sharedInstance().stop()
   }
 
-  func test_Fetch_When_Response_Is_Valid() {
+  func testFetchWhenResponseIsValid() {
     stubRequest("GET", VersionFileURL)
       .andReturn(200)
       .withBody(String(data: fixtureData("Versions"), encoding: NSUTF8StringEncoding))
@@ -35,7 +35,7 @@ class DownloadServiceTests: XCTestCase {
     }
   }
 
-  func test_Fetch_When_Request_Returns_Non_200_Status() {
+  func testFetchWhenRequestReturnsNon200Status() {
     stubRequest("GET", VersionFileURL).andReturn(500)
 
     validateRequest() { version, error in
@@ -44,7 +44,7 @@ class DownloadServiceTests: XCTestCase {
     }
   }
 
-  func test_Fetch_When_Request_Errors_Out() {
+  func testFetchWhenRequestErrorsOut() {
     stubRequest("GET", VersionFileURL).andFailWithError(NSError(domain: "SomeDomain", code: 1, userInfo: nil))
 
     validateRequest() { version, error in

@@ -20,14 +20,14 @@ private func createJSONObject(json: String) throws -> AnyObject {
 }
 
 class VersionTests: XCTestCase {
-  func test_Initializer_Parses_Version() {
+  func testInitializerParsesVersion() {
     let json    = createVersionJSON("1.0.1", policy: "none")
     let version = Version(json: json)
 
     XCTAssertEqual("1.0.1", version.versionString)
   }
 
-  func test_Initializer_Parses_Policy_Correctly() {
+  func testInitializerParsesPolicyCorrectly() {
     let expectations = [
       "force": VersionPolicy.Force,
       "recommend": VersionPolicy.Recommend,

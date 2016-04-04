@@ -20,7 +20,7 @@ class RetiredTests: XCTestCase {
     Retired.nextRequestDate.clear()
   }
 
-  func test_Check_When_Not_Configured() {
+  func testCheckWhenNotConfigured() {
     Retired.fetcher = nil
 
     XCTAssertThrows(RetiredError.NotConfigured) {
@@ -28,12 +28,12 @@ class RetiredTests: XCTestCase {
     }
   }
 
-  func test_Check_When_Not_Supressed_Calls_The_Fetcher() {
+  func testCheckWhenNotSupressedCallsTheFetcher() {
     try! Retired.check() { _, _, _ in }
     XCTAssertTrue(fetcher.called)
   }
 
-  func test_Check_When_Supressed_Skips_The_Call() {
+  func testCheckWhenSupressedSkipsTheCall() {
     Retired.suppressUntil(NSDate(timeIntervalSinceNow: 5000))
 
     try! Retired.check() { _, _, _ in }

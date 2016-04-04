@@ -12,15 +12,15 @@ import XCTest
 class VersionFileTests: XCTestCase {
   let file = VersionFile(json: jsonFixture("Versions"))
 
-  func test_Initializer_Parses_Forced_Message() {
+  func testInitializerParsesForcedMessage() {
     XCTAssertNotNil(file.forcedMessage)
   }
 
-  func test_Initializer_Parses_Recommended_Message() {
+  func testInitializerParsesRecommendedMessage() {
     XCTAssertNotNil(file.recommendedMessage)
   }
 
-  func test_Initializer_Parses_Versions() {
+  func testInitializerParsesVersions() {
     XCTAssertGreaterThan(file.versions.count, 0)
 
     for version in file.versions {

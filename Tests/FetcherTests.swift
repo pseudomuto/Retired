@@ -25,7 +25,7 @@ class FetcherTests: XCTestCase {
     LSNocilla.sharedInstance().stop()
   }
 
-  func test_Check_When_Forced_Update_Required() {
+  func testCheckWhenForcedUpdateRequired() {
     stubVersionsWith("Versions")
 
     assertResult { shouldUpdate, message, error in
@@ -37,7 +37,7 @@ class FetcherTests: XCTestCase {
     }
   }
 
-  func test_Check_When_Update_Recommended() {
+  func testCheckWhenUpdateRecommended() {
     stubVersionsWith("VersionsRecommendUpdate")
 
     assertResult { shouldUpdate, message, error in
@@ -49,7 +49,7 @@ class FetcherTests: XCTestCase {
     }
   }
 
-  func test_Check_When_Current_Version_Not_Found() {
+  func testCheckWhenCurrentVersionNotFound() {
     stubVersionsWith("VersionsWithoutCurrent")
 
     assertResult { shouldUpdate, message, error in
@@ -61,7 +61,7 @@ class FetcherTests: XCTestCase {
     }
   }
 
-  func test_Check_When_Error_Occurs() {
+  func testCheckWhenErrorOccurs() {
     stubRequest("GET", versionURL).andFailWithError(NSError(domain: "err", code: 1, userInfo: nil))
 
     assertResult { shouldUpdate, message, error in
