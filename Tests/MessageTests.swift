@@ -10,7 +10,7 @@ import Retired
 import XCTest
 
 class MessageTests: XCTestCase {
-  func test_Initializer_With_Cancel_Button_Text() {
+  func testInitializerWithCancelButtonText() {
     let message = Message(json: jsonFixture("RecommendedMessage"))
     
     XCTAssertEqual("title", message.title)
@@ -19,7 +19,7 @@ class MessageTests: XCTestCase {
     XCTAssertEqual("cancel", message.cancelButtonText)
   }
 
-  func test_Initializer_Without_Cancel_Button_Text() {
+  func testInitializerWithoutCancelButtonText() {
     let message = Message(json: jsonFixture("ForcedMessage"))
 
     XCTAssertEqual("title", message.title)

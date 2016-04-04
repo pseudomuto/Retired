@@ -6,37 +6,56 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
+public typealias RetiredCompletion = (Bool, Message?, NSError?) -> Void
+
+public let RetiredErrorDomain = "RetiredError"
+
+public enum RetiredError: ErrorType {
+  case NotConfigured
+}
+
 public class Retired {
-  static var bundle            = NSBundle.mainBundle()
-  static let errorDomain       = "RetiredError"
-  static let errorCodeNotFound = 1
+  static var fetcher: FileFetcher?
+  static var suppressionInterval: NSTimeInterval = 0
+  static var nextRequestDate = StoredSetting<NSDate>(name: "nextRequestDate")
 
-  public static func check(url: NSURL, completion: (Bool, Message?, NSError?) -> Void) {
-    let service = DownloadService(url: url)
+  public static func configure(
+    url: NSURL,
+    suppressionInterval: NSTimeInterval = 0,
+    bundle: NSBundle = NSBundle.mainBundle()) {
+      self.suppressionInterval = suppressionInterval
+      self.fetcher             = Fetcher(url: url, bundle: bundle)
+  }
 
-    service.fetch() { versionFile, error in
+  public static func check(completion: RetiredCompletion) throws {
+    guard shouldPerformCheck() else { return }
+    guard let fetcher = fetcher else { throw RetiredError.NotConfigured }
+
+    fetcher.check() { forcedUpdate, message, error in
       guard error == nil else {
-        completion(false, nil, error!)
+        completion(false, nil, error)
         return
       }
 
-      let file     = versionFile!
-      let version  = bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-      let versions = file.versions.map { $0.versionString }
-
-      guard let index = versions.indexOf(version) else {
-        completion(false, nil, NSError(domain: errorDomain, code: errorCodeNotFound, userInfo: nil))
-        return
+      if forcedUpdate {
+        nextRequestDate.clear()
+      } else {
+        nextRequestDate.value = NSDate(timeIntervalSinceNow: suppressionInterval)
       }
 
-      switch file.versions[index].policy {
-      case .Force:
-        completion(true, file.forcedMessage, nil)
-      case .Recommend:
-        completion(true, file.recommendedMessage, nil)
-      case .None:
-        completion(false, nil, nil)
-      }
+      completion(true, message, nil)
     }
+  }
+
+  public static func clearSuppressionInterval() {
+    nextRequestDate.value = nil
+  }
+
+  private static func shouldPerformCheck() -> Bool {
+    if let suppressionDate = nextRequestDate.value {
+      return suppressionDate.compare(NSDate()) != .OrderedDescending
+    }
+
+    return true
   }
 }
