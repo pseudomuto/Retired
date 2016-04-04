@@ -109,7 +109,7 @@ extension Message {
     alert.addAction(UIAlertAction(title: continueButtonText, style: .Default, handler: goToAppStore))
 
     if cancelButtonText != nil {
-      alert.addAction(UIAlertAction(title: cancelButtonText, style: .Cancel, handler: doItAgainLater))
+      alert.addAction(UIAlertAction(title: cancelButtonText, style: .Cancel, handler: nil))
     }
 
     controller?.presentViewController(alert, animated: true, completion: nil)
@@ -118,12 +118,6 @@ extension Message {
   private func goToAppStore(action: UIAlertAction) {
     UIApplication.sharedApplication().openURL(iTunesURL)
   }
-
-  private func doItAgainLater(action: UIAlertAction) {
-    // don't check again until after this date
-    let intervalBetweenRequests: NSTimeInterval = 60 * 60 * 24 // 1 day
-    Retired.suppressUntil(NSDate(timeIntervalSinceNow: intervalBetweenRequests))
-  }
 }
 ```
 
@@ -131,7 +125,10 @@ Then, in `applicationDidFinishLaunching:withOptions`, I configured `Retired` wit
 
 ```swift
 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-  Retired.configure(NSURL(string: "https://example.com/versions.json")!)
+  let versionURL              = NSURL(string: "https://example.com/versions.json")!
+  let intervalBetweenRequests = 60 * 60 * 24 // one day
+
+  Retired.configure(versionURL, suppressionInterval: intervalBetweenRequests)
   return true
 }
 ```
@@ -140,6 +137,7 @@ Finally, in `applicationDidBecomeActive`, I query the status and show a message 
 
 ```swift
 func applicationDidBecomeActive(application: UIApplication) {
+  // you should catch the error in production apps
   try! Retired.check() { updateRequired, message, error in
     guard updateRequired else { return }
 
@@ -151,11 +149,6 @@ func applicationDidBecomeActive(application: UIApplication) {
   }
 }
 ```
-
-> _**You should be sure to not pester the user everytime the app becomes active**_.
-
-> For this reason, `Retired` has a method called `suppressUntil` that takes an NSDate object. No more requests will be
-made until after the supplied date
 
 ## LICENSE
 

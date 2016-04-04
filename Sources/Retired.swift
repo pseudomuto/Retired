@@ -16,22 +16,27 @@ public enum RetiredError: ErrorType {
 
 public class Retired {
   static var fetcher: FileFetcher?
+  static var suppressionInterval: NSTimeInterval = 0
   static var nextRequestDate = StoredSetting<NSDate>(name: "nextRequestDate")
 
-  public static func configure(url: NSURL, bundle: NSBundle = NSBundle.mainBundle()) {
-    fetcher = Fetcher(url: url, bundle: bundle)
+  public static func configure(
+    url: NSURL,
+    suppressionInterval: NSTimeInterval = 0,
+    bundle: NSBundle = NSBundle.mainBundle()) {
+      self.suppressionInterval = suppressionInterval
+      self.fetcher             = Fetcher(url: url, bundle: bundle)
   }
 
   public static func check(completion: RetiredCompletion) throws {
     guard shouldPerformCheck() else { return }
     guard let fetcher = fetcher else { throw RetiredError.NotConfigured }
 
-    nextRequestDate.clear()
+    nextRequestDate.value = NSDate(timeIntervalSinceNow: suppressionInterval)
     fetcher.check(completion)
   }
 
-  public static func suppressUntil(date: NSDate) {
-    nextRequestDate.value = date
+  public static func clearSuppressionInterval() {
+    nextRequestDate.value = nil
   }
 
   private static func shouldPerformCheck() -> Bool {

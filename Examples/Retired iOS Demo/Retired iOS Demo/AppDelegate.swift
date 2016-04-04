@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    Retired.configure(versionURL)
+    Retired.configure(versionURL, suppressionInterval: intervalBetweenRequests)
     return true
   }
 
@@ -44,7 +44,7 @@ extension Message {
     alert.addAction(UIAlertAction(title: continueButtonText, style: .Default, handler: goToAppStore))
 
     if cancelButtonText != nil {
-      alert.addAction(UIAlertAction(title: cancelButtonText, style: .Cancel, handler: doItAgainLater))
+      alert.addAction(UIAlertAction(title: cancelButtonText, style: .Cancel, handler: nil))
     }
 
     controller?.presentViewController(alert, animated: true, completion: nil)
@@ -52,9 +52,5 @@ extension Message {
 
   private func goToAppStore(action: UIAlertAction) {
     UIApplication.sharedApplication().openURL(iTunesURL)
-  }
-
-  private func doItAgainLater(action: UIAlertAction) {
-    Retired.suppressUntil(NSDate(timeIntervalSinceNow: intervalBetweenRequests))
   }
 }

@@ -33,11 +33,26 @@ class RetiredTests: XCTestCase {
     XCTAssertTrue(fetcher.called)
   }
 
+  func testCheckWhenFetcherCalledSetsNextRequestDate() {
+    XCTAssertNil(Retired.nextRequestDate.value)
+
+    try! Retired.check() { _, _, _ in }
+    XCTAssertTrue(fetcher.called)
+    XCTAssertNotNil(Retired.nextRequestDate.value)
+  }
+
   func testCheckWhenSupressedSkipsTheCall() {
-    Retired.suppressUntil(NSDate(timeIntervalSinceNow: 5000))
+    Retired.nextRequestDate.value = NSDate(timeIntervalSinceNow: 5000)
 
     try! Retired.check() { _, _, _ in }
     XCTAssertFalse(fetcher.called)
+  }
+
+  func testCheckWhenIntervalLapsedCallsFetcher() {
+    Retired.nextRequestDate.value = NSDate(timeIntervalSinceNow: -1)
+
+    try! Retired.check() { _, _, _ in }
+    XCTAssertTrue(fetcher.called)
   }
 
   class TestFetcher: FileFetcher {
