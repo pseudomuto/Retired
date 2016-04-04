@@ -41,6 +41,15 @@ class RetiredTests: XCTestCase {
     XCTAssertNotNil(Retired.nextRequestDate.value)
   }
 
+  func testCheckWhenFetcherReturnedForcedUpdateClearsSupressionInterval() {
+    fetcher                       = TestFetcher(forcedUpdate: true)
+    Retired.fetcher               = fetcher
+
+    try! Retired.check() { _, _, _ in }
+    XCTAssertTrue(fetcher.called)
+    XCTAssertNil(Retired.nextRequestDate.value)
+  }
+
   func testCheckWhenSupressedSkipsTheCall() {
     Retired.nextRequestDate.value = NSDate(timeIntervalSinceNow: 5000)
 
@@ -58,8 +67,15 @@ class RetiredTests: XCTestCase {
   class TestFetcher: FileFetcher {
     private(set) var called = false
 
+    private let forced: Bool
+
+    init(forcedUpdate: Bool = false) {
+      forced = forcedUpdate
+    }
+
     func check(completion: RetiredCompletion) {
       called = true
+      completion(forced, nil, nil)
     }
   }
 }

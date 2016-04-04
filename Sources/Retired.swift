@@ -31,8 +31,20 @@ public class Retired {
     guard shouldPerformCheck() else { return }
     guard let fetcher = fetcher else { throw RetiredError.NotConfigured }
 
-    nextRequestDate.value = NSDate(timeIntervalSinceNow: suppressionInterval)
-    fetcher.check(completion)
+    fetcher.check() { forcedUpdate, message, error in
+      guard error == nil else {
+        completion(false, nil, error)
+        return
+      }
+
+      if forcedUpdate {
+        nextRequestDate.clear()
+      } else {
+        nextRequestDate.value = NSDate(timeIntervalSinceNow: suppressionInterval)
+      }
+
+      completion(true, message, nil)
+    }
   }
 
   public static func clearSuppressionInterval() {

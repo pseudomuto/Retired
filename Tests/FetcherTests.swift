@@ -28,8 +28,8 @@ class FetcherTests: XCTestCase {
   func testCheckWhenForcedUpdateRequired() {
     stubVersionsWith("Versions")
 
-    assertResult { shouldUpdate, message, error in
-      XCTAssertTrue(shouldUpdate)
+    assertResult { forcedUpdate, message, error in
+      XCTAssertTrue(forcedUpdate)
       XCTAssertNotNil(message)
       XCTAssertNil(error)
 
@@ -40,8 +40,8 @@ class FetcherTests: XCTestCase {
   func testCheckWhenUpdateRecommended() {
     stubVersionsWith("VersionsRecommendUpdate")
 
-    assertResult { shouldUpdate, message, error in
-      XCTAssertTrue(shouldUpdate)
+    assertResult { forcedUpdate, message, error in
+      XCTAssertFalse(forcedUpdate)
       XCTAssertNotNil(message)
       XCTAssertNil(error)
 
@@ -52,8 +52,8 @@ class FetcherTests: XCTestCase {
   func testCheckWhenCurrentVersionNotFound() {
     stubVersionsWith("VersionsWithoutCurrent")
 
-    assertResult { shouldUpdate, message, error in
-      XCTAssertFalse(shouldUpdate)
+    assertResult { forcedUpdate, message, error in
+      XCTAssertFalse(forcedUpdate)
       XCTAssertNil(message)
       XCTAssertNotNil(error)
 
@@ -64,8 +64,8 @@ class FetcherTests: XCTestCase {
   func testCheckWhenErrorOccurs() {
     stubRequest("GET", versionURL).andFailWithError(NSError(domain: "err", code: 1, userInfo: nil))
 
-    assertResult { shouldUpdate, message, error in
-      XCTAssertFalse(shouldUpdate)
+    assertResult { forcedUpdate, message, error in
+      XCTAssertFalse(forcedUpdate)
       XCTAssertNil(message)
       XCTAssertNotNil(error)
     }
@@ -74,8 +74,8 @@ class FetcherTests: XCTestCase {
   private func assertResult(completion: (Bool, Message?, NSError?) -> Void) {
     let expectation = expectationWithDescription("Check")
 
-    fetcher!.check() { shouldUpdate, message, error in
-      completion(shouldUpdate, message, error)
+    fetcher!.check() { forcedUpdate, message, error in
+      completion(forcedUpdate, message, error)
       expectation.fulfill()
     }
 

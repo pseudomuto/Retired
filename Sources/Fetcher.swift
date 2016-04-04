@@ -38,7 +38,7 @@ class Fetcher: FileFetcher {
       }
 
       let message = file.messageForVersion(definition)
-      completion(message != nil, message, nil)
+      completion(definition.policy == .Force, message, nil)
     }
   }
 
