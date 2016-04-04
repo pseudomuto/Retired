@@ -25,7 +25,7 @@ public struct StoredSetting<T: AnyObject> {
     }
   }
 
-  public init(_ name: String, container: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
+  public init(name: String, container: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
     key      = name
     settings = container
   }

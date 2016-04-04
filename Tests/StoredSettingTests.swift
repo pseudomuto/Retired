@@ -14,7 +14,7 @@ class StoredSettingTests: XCTestCase {
   let settingsContainer = NSUserDefaults()
 
   lazy var storedProp: StoredSetting<NSString> = {
-    return StoredSetting(self.settingKey, container: self.settingsContainer)
+    return StoredSetting(name: self.settingKey, container: self.settingsContainer)
   }()
 
   override func tearDown() {

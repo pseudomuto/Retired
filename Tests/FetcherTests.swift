@@ -18,7 +18,7 @@ class FetcherTests: XCTestCase {
 
   override func setUp() {
     LSNocilla.sharedInstance().start()
-    fetcher = Fetcher(NSURL(string: versionURL)!, bundle: bundle)
+    fetcher = Fetcher(url: NSURL(string: versionURL)!, bundle: bundle)
   }
 
   override func tearDown() {

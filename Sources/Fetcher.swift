@@ -16,7 +16,7 @@ class Fetcher: FileFetcher {
   let url: NSURL
   let bundle: NSBundle
 
-  init(_ url: NSURL, bundle: NSBundle) {
+  init(url: NSURL, bundle: NSBundle) {
     self.url    = url
     self.bundle = bundle
   }

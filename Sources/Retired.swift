@@ -16,10 +16,10 @@ public enum RetiredError: ErrorType {
 
 public class Retired {
   static var fetcher: FileFetcher?
-  static var nextRequestDate = StoredSetting<NSDate>("nextRequestDate")
+  static var nextRequestDate = StoredSetting<NSDate>(name: "nextRequestDate")
 
   public static func configure(url: NSURL, bundle: NSBundle = NSBundle.mainBundle()) {
-    fetcher = Fetcher(url, bundle: bundle)
+    fetcher = Fetcher(url: url, bundle: bundle)
   }
 
   public static func check(completion: RetiredCompletion) throws {
