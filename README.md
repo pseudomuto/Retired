@@ -14,7 +14,7 @@ A simple framework to help recommend/force app updates and sunset old versions
 Add the following to your Cartfile:
 
 ```
-github "pseudomuto/Retired" ~> 0.0
+github "pseudomuto/Retired" ~> 1.0
 ```
 
 ### Cocoapods
@@ -22,7 +22,7 @@ github "pseudomuto/Retired" ~> 0.0
 Add this to your Podfile:
 
 ```
-pod "Retired", "~> 0.0"
+pod "Retired", "~> 1.0"
 ```
 
 ### Swift Package Manager
@@ -36,7 +36,7 @@ let package = Package(
   ...
   ...
   dependencies: [
-    .Package(url: "https://github.com/pseudomuto/Retired.git", majorVersion: 0)
+    .Package(url: "https://github.com/pseudomuto/Retired.git", majorVersion: 1)
   ],
   ...
   ...
@@ -51,7 +51,7 @@ You'll need to host a JSON file on a server somewhere that defines options like 
 recommended or not necessary.
 
 The file also defines the messaging to be displayed in each case. For example, if the user has version 1.0 installed
-(and the file below is used), when the you call `Retire.check` the supplied message in the completion block  will be 
+(and the file below is used), when the you call `Retire.check` the supplied message in the completion block will be 
 the `forced` one.
 
 If they're running 1.1, you'd get the recommended message, and if they're running 2.0 no update would be required.
@@ -87,6 +87,8 @@ There are two types of objects here; message and version.
 
 * `title` - The title of the alert (e.g. New Version Available)
 * `message` - The message to be displayed (e.g. There's a new version available)
+* `continueButtonText` - The label for the button that links to the app store
+* `cancelButtonText` - The (optional) label for the cancel button (intended for recommended updates only)
 
 **version**
 
@@ -107,24 +109,38 @@ extension Message {
     alert.addAction(UIAlertAction(title: continueButtonText, style: .Default, handler: goToAppStore))
 
     if cancelButtonText != nil {
-      alert.addAction(UIAlertAction(title: cancelButtonText, style: .Cancel, handler: nil))
+      alert.addAction(UIAlertAction(title: cancelButtonText, style: .Cancel, handler: doItAgainLater))
     }
 
     controller?.presentViewController(alert, animated: true, completion: nil)
   }
 
   private func goToAppStore(action: UIAlertAction) {
-    // grab your iTunesURL from here: https://linkmaker.itunes.apple.com/
     UIApplication.sharedApplication().openURL(iTunesURL)
+  }
+
+  private func doItAgainLater(action: UIAlertAction) {
+    // don't check again until after this date
+    let intervalBetweenRequests: NSTimeInterval = 60 * 60 * 24 // 1 day
+    Retired.supressUntil(NSDate(timeIntervalSinceNow: intervalBetweenRequests))
   }
 }
 ```
 
-Then, in `applicationDidBecomeActive`, I query the status and show a message if necessary:
+Then, in `applicationDidFinishLaunching:withOptions`, I configured `Retired` with the URL to the versions file:
+
+```swift
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  Retired.configure(NSURL(string: "https://example.com/versions.json")!)
+  return true
+}
+```
+
+Finally, in `applicationDidBecomeActive`, I query the status and show a message if necessary:
 
 ```swift
 func applicationDidBecomeActive(application: UIApplication) {
-  Retired.check(versionURL) { updateRequired, message, error in
+  try! Retired.check() { updateRequired, message, error in
     guard updateRequired else { return }
 
     // handle error (non 200 status or network issue)
@@ -138,7 +154,8 @@ func applicationDidBecomeActive(application: UIApplication) {
 
 > _**You should be sure to not pester the user everytime the app becomes active**_.
 
-> You could do this with a timer, user preference or how ever you like.
+> For this reason, `Retired` has a method called `supressUntil` that takes an NSDate object. No more requests will be
+made until after the supplied date
 
 ## LICENSE
 
