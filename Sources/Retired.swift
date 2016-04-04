@@ -28,7 +28,6 @@ public class Retired {
   }
 
   public static func check(completion: RetiredCompletion) throws {
-    guard shouldPerformCheck() else { return }
     guard let fetcher = fetcher else { throw RetiredError.NotConfigured }
 
     fetcher.check() { forcedUpdate, message, error in
@@ -36,6 +35,9 @@ public class Retired {
         completion(false, nil, error)
         return
       }
+
+      // skip the completion block unless it's a forced update or the suppression interval has lapsed
+      guard forcedUpdate || suppressionWindowLapsed() else { return }
 
       if forcedUpdate {
         nextRequestDate.clear()
@@ -51,7 +53,7 @@ public class Retired {
     nextRequestDate.value = nil
   }
 
-  private static func shouldPerformCheck() -> Bool {
+  private static func suppressionWindowLapsed() -> Bool {
     if let suppressionDate = nextRequestDate.value {
       return suppressionDate.compare(NSDate()) != .OrderedDescending
     }
