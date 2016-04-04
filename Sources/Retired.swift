@@ -30,13 +30,13 @@ public class Retired {
     fetcher.check(completion)
   }
 
-  public static func supressUntil(date: NSDate) {
+  public static func suppressUntil(date: NSDate) {
     nextRequestDate.value = date
   }
 
   private static func shouldPerformCheck() -> Bool {
-    if let supressionDate = nextRequestDate.value {
-      return supressionDate.compare(NSDate()) != .OrderedDescending
+    if let suppressionDate = nextRequestDate.value {
+      return suppressionDate.compare(NSDate()) != .OrderedDescending
     }
 
     return true

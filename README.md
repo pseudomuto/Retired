@@ -122,7 +122,7 @@ extension Message {
   private func doItAgainLater(action: UIAlertAction) {
     // don't check again until after this date
     let intervalBetweenRequests: NSTimeInterval = 60 * 60 * 24 // 1 day
-    Retired.supressUntil(NSDate(timeIntervalSinceNow: intervalBetweenRequests))
+    Retired.suppressUntil(NSDate(timeIntervalSinceNow: intervalBetweenRequests))
   }
 }
 ```
@@ -154,7 +154,7 @@ func applicationDidBecomeActive(application: UIApplication) {
 
 > _**You should be sure to not pester the user everytime the app becomes active**_.
 
-> For this reason, `Retired` has a method called `supressUntil` that takes an NSDate object. No more requests will be
+> For this reason, `Retired` has a method called `suppressUntil` that takes an NSDate object. No more requests will be
 made until after the supplied date
 
 ## LICENSE

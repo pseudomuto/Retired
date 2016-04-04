@@ -55,6 +55,6 @@ extension Message {
   }
 
   private func doItAgainLater(action: UIAlertAction) {
-    Retired.supressUntil(NSDate(timeIntervalSinceNow: intervalBetweenRequests))
+    Retired.suppressUntil(NSDate(timeIntervalSinceNow: intervalBetweenRequests))
   }
 }

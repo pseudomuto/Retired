@@ -34,7 +34,7 @@ class RetiredTests: XCTestCase {
   }
 
   func test_Check_When_Supressed_Skips_The_Call() {
-    Retired.supressUntil(NSDate(timeIntervalSinceNow: 5000))
+    Retired.suppressUntil(NSDate(timeIntervalSinceNow: 5000))
 
     try! Retired.check() { _, _, _ in }
     XCTAssertFalse(fetcher.called)
