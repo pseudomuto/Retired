@@ -27,14 +27,14 @@ public struct VersionFile {
     versions = versionDefinitions.map { Version(json: $0) }
   }
 
-  internal func findVersion(versionString: String) -> Version? {
+  func findVersion(versionString: String) -> Version? {
     let strings = versions.map { $0.versionString }
     guard let index = strings.indexOf(versionString) else { return nil }
 
     return versions[index]
   }
 
-  internal func messageForVersion(version: Version) -> Message? {
+  func messageForVersion(version: Version) -> Message? {
     switch version.policy {
     case .Force: return forcedMessage
     case .Recommend: return recommendedMessage

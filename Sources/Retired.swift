@@ -15,8 +15,8 @@ public enum RetiredError: ErrorType {
 }
 
 public class Retired {
-  internal static var fetcher: FileFetcher?
-  internal static var nextRequestDate = StoredSetting<NSDate>("nextRequestDate")
+  static var fetcher: FileFetcher?
+  static var nextRequestDate = StoredSetting<NSDate>("nextRequestDate")
 
   public static func configure(url: NSURL, bundle: NSBundle = NSBundle.mainBundle()) {
     fetcher = Fetcher(url, bundle: bundle)

@@ -11,7 +11,7 @@ public enum VersionPolicy {
   case Recommend
   case None
 
-  internal static func parse(policy: String) -> VersionPolicy{
+  static func parse(policy: String) -> VersionPolicy{
     switch policy.lowercaseString {
     case "force":
       return .Force
