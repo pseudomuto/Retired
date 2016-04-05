@@ -12,6 +12,9 @@ import XCTest
 class RetiredTests: XCTestCase {
   var fetcher = TestFetcher()
 
+  lazy var future = NSDate(timeIntervalSinceNow: 50)
+  lazy var past   = NSDate(timeIntervalSinceNow: -1)
+
   override func setUp() {
     Retired.fetcher = fetcher
   }
@@ -28,12 +31,12 @@ class RetiredTests: XCTestCase {
     }
   }
 
-  func testCheckWhenNotSupressedCallsTheFetcher() {
+  func testCheckCallsTheFetcher() {
     try! Retired.check() { _, _, _ in }
     XCTAssertTrue(fetcher.called)
   }
 
-  func testCheckWhenFetcherCalledSetsNextRequestDate() {
+  func testCheckWhenUpdateRecommendedSetsNextRequestDate() {
     XCTAssertNil(Retired.nextRequestDate.value)
 
     try! Retired.check() { _, _, _ in }
@@ -41,24 +44,38 @@ class RetiredTests: XCTestCase {
     XCTAssertNotNil(Retired.nextRequestDate.value)
   }
 
-  func testCheckWhenFetcherReturnedForcedUpdateClearsSupressionInterval() {
+  func testCheckWhenForcedUpdateSupressionIntervalIsCleared() {
     fetcher                       = TestFetcher(forcedUpdate: true)
     Retired.fetcher               = fetcher
+    Retired.nextRequestDate.value = future
 
     try! Retired.check() { _, _, _ in }
     XCTAssertTrue(fetcher.called)
     XCTAssertNil(Retired.nextRequestDate.value)
   }
 
-  func testCheckWhenSupressedSkipsTheCall() {
-    Retired.nextRequestDate.value = NSDate(timeIntervalSinceNow: 5000)
+  func testCheckWhenSuppressedDoesNotCallCompletionBlock() {
+    Retired.nextRequestDate.value = future
+
+    var called = false
+    try! Retired.check() { _, _, _ in
+      called = true
+    }
+
+    XCTAssertTrue(fetcher.called)
+    XCTAssertFalse(called)
+  }
+
+  func testCheckWhenSuppressedDoesNotUpdateSuppressionInterval() {
+    Retired.nextRequestDate.value = future
 
     try! Retired.check() { _, _, _ in }
-    XCTAssertFalse(fetcher.called)
+    XCTAssertTrue(fetcher.called)
+    XCTAssertEqual(future, Retired.nextRequestDate.value)
   }
 
   func testCheckWhenIntervalLapsedCallsFetcher() {
-    Retired.nextRequestDate.value = NSDate(timeIntervalSinceNow: -1)
+    Retired.nextRequestDate.value = past
 
     try! Retired.check() { _, _, _ in }
     XCTAssertTrue(fetcher.called)

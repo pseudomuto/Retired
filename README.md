@@ -126,7 +126,7 @@ Then, in `applicationDidFinishLaunching:withOptions`, I configured `Retired` wit
 ```swift
 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
   let versionURL              = NSURL(string: "https://example.com/versions.json")!
-  let intervalBetweenRequests = 60 * 60 * 24 // one day
+  let intervalBetweenRequests = 60 * 60 * 24 // one day between recommended app updates
 
   Retired.configure(versionURL, suppressionInterval: intervalBetweenRequests)
   return true
