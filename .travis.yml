@@ -1,0 +1,16 @@
+language: objective-c
+osx_image: xcode7.3
+
+xcode_project: Retired.xcodeproj
+xcode_scheme: Retired iOS
+xcode_sdk: iphonesimulator9.3
+
+env:
+  CODE_SIGNING_REQUIRED: NO
+
+before_install:
+  - brew update
+  - brew install carthage
+
+before_script:
+  - carthage bootstrap --platform iOS
