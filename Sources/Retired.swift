@@ -10,25 +10,25 @@ public typealias RetiredCompletion = (Bool, Message?, NSError?) -> Void
 
 public let RetiredErrorDomain = "RetiredError"
 
-public enum RetiredError: ErrorType {
-  case NotConfigured
+public enum RetiredError: Error {
+  case notConfigured
 }
 
-public class Retired {
+open class Retired {
   static var fetcher: FileFetcher?
-  static var suppressionInterval: NSTimeInterval = 0
+  static var suppressionInterval: TimeInterval = 0
   static var nextRequestDate = StoredSetting<NSDate>(name: "nextRequestDate")
 
-  public static func configure(
-    url: NSURL,
-    suppressionInterval: NSTimeInterval = 0,
-    bundle: NSBundle = NSBundle.mainBundle()) {
+  open static func configure(
+    _ url: URL,
+    suppressionInterval: TimeInterval = 0,
+    bundle: Bundle = Bundle.main) {
       self.suppressionInterval = suppressionInterval
       self.fetcher             = Fetcher(url: url, bundle: bundle)
   }
 
-  public static func check(completion: RetiredCompletion) throws {
-    guard let fetcher = fetcher else { throw RetiredError.NotConfigured }
+  open static func check(_ completion: @escaping RetiredCompletion) throws {
+    guard let fetcher = fetcher else { throw RetiredError.notConfigured }
 
     fetcher.check() { forcedUpdate, message, error in
       guard error == nil else {
@@ -49,13 +49,13 @@ public class Retired {
     }
   }
 
-  public static func clearSuppressionInterval() {
+  open static func clearSuppressionInterval() {
     nextRequestDate.value = nil
   }
 
-  private static func suppressionWindowLapsed() -> Bool {
+  fileprivate static func suppressionWindowLapsed() -> Bool {
     if let suppressionDate = nextRequestDate.value {
-      return suppressionDate.compare(NSDate()) != .OrderedDescending
+      return suppressionDate.compare(Date()) != .orderedDescending
     }
 
     return true

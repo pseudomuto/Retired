@@ -9,19 +9,19 @@
 import Foundation
 
 public protocol FileFetcher {
-  func check(completion: RetiredCompletion)
+  func check(_ completion: @escaping RetiredCompletion)
 }
 
 class Fetcher: FileFetcher {
-  let url: NSURL
-  let bundle: NSBundle
+  let url: URL
+  let bundle: Bundle
 
-  init(url: NSURL, bundle: NSBundle) {
+  init(url: URL, bundle: Bundle) {
     self.url    = url
     self.bundle = bundle
   }
 
-  func check(completion: RetiredCompletion) {
+  public func check(_ completion: @escaping RetiredCompletion) {
     let service = DownloadService(url: url)
 
     service.fetch() { versionFile, error in
@@ -38,11 +38,11 @@ class Fetcher: FileFetcher {
       }
 
       let message = file.messageForVersion(definition)
-      completion(definition.policy == .Force, message, nil)
+      completion(definition.policy == .force, message, nil)
     }
   }
 
-  private func currentVersion() -> String {
-    return bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+  fileprivate func currentVersion() -> String {
+    return bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
   }
 }

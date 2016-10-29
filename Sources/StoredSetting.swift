@@ -7,31 +7,31 @@
 //
 
 public struct StoredSetting<T: AnyObject> {
-  private let key: String
-  private let settings: NSUserDefaults
+  fileprivate let key: String
+  fileprivate let settings: UserDefaults
 
   public var value: T? {
     get {
-      return settings.objectForKey(key) as? T
+      return settings.object(forKey: key) as? T
     }
     set {
       if let setting = newValue {
-        settings.setObject(setting, forKey: key)
+        settings.set(setting, forKey: key)
       } else {
-        settings.removeObjectForKey(key)
+        settings.removeObject(forKey: key)
       }
 
       settings.synchronize()
     }
   }
 
-  public init(name: String, container: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
+  public init(name: String, container: UserDefaults = UserDefaults.standard) {
     key      = name
     settings = container
   }
 
   public func clear() {
-    settings.removeObjectForKey(key)
+    settings.removeObject(forKey: key)
     settings.synchronize()
   }
 }

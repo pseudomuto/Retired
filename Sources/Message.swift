@@ -7,7 +7,7 @@
 //
 
 public struct Message {
-  private struct Constants {
+  fileprivate struct Constants {
     static let titleAttribute              = "title"
     static let messageAttribute            = "message"
     static let continueButtonTextAttribute = "continueButtonText"

@@ -11,7 +11,7 @@ import XCTest
 
 class StoredSettingTests: XCTestCase {
   let settingKey        = "mySetting"
-  let settingsContainer = NSUserDefaults()
+  let settingsContainer = UserDefaults()
 
   lazy var storedProp: StoredSetting<NSString> = {
     return StoredSetting(name: self.settingKey, container: self.settingsContainer)
@@ -20,12 +20,12 @@ class StoredSettingTests: XCTestCase {
   override func tearDown() {
     super.tearDown()
 
-    settingsContainer.removeObjectForKey(settingKey)
+    settingsContainer.removeObject(forKey: settingKey)
     settingsContainer.synchronize()
   }
 
   func testGetValuePullsFromContainer() {
-    settingsContainer.setObject("My Value", forKey: settingKey)
+    settingsContainer.set("My Value", forKey: settingKey)
     XCTAssertEqual("My Value", storedProp.value)
   }
 
@@ -35,7 +35,7 @@ class StoredSettingTests: XCTestCase {
 
   func testSetValueStoresValueInContainer() {
     storedProp.value = "value"
-    XCTAssertEqual("value", settingsContainer.stringForKey(settingKey))
+    XCTAssertEqual("value", settingsContainer.string(forKey: settingKey))
   }
 
   func testSetValueToNilRemovesObjectFromContainer() {

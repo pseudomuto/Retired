@@ -7,7 +7,7 @@
 //
 
 public struct VersionFile {
-  private struct Constants {
+  fileprivate struct Constants {
     static let messagingAttribute          = "messaging"
     static let forcedMessageAttribute      = "forced"
     static let recommendedMessageAttribute = "recommended"
@@ -27,17 +27,17 @@ public struct VersionFile {
     versions = versionDefinitions.map { Version(json: $0) }
   }
 
-  func findVersion(versionString: String) -> Version? {
+  func findVersion(_ versionString: String) -> Version? {
     let strings = versions.map { $0.versionString }
-    guard let index = strings.indexOf(versionString) else { return nil }
+    guard let index = strings.index(of: versionString) else { return nil }
 
     return versions[index]
   }
 
-  func messageForVersion(version: Version) -> Message? {
+  func messageForVersion(_ version: Version) -> Message? {
     switch version.policy {
-    case .Force: return forcedMessage
-    case .Recommend: return recommendedMessage
+    case .force: return forcedMessage
+    case .recommend: return recommendedMessage
     default: return nil
     }
   }
