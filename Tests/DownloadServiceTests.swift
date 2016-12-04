@@ -6,7 +6,7 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
-import Nocilla
+import OHHTTPStubs
 import XCTest
 
 @testable import Retired
@@ -16,27 +16,29 @@ private let VersionFileURL = "https://example.com/versions.json"
 class DownloadServiceTests: XCTestCase {
   let service = DownloadService(string: VersionFileURL)
 
-  override func setUp() {
-    LSNocilla.sharedInstance().start()
-  }
-
   override func tearDown() {
-    LSNocilla.sharedInstance().stop()
+    OHHTTPStubs.removeAllStubs()
+    super.tearDown()
   }
 
-//  func testFetchWhenResponseIsValid() {
-//    stubRequest("GET", VersionFileURL as LSMatcheable!)
-//      .andReturn(200)
-//      .withBody(String(data: fixtureData("Versions"), encoding: String.Encoding.utf8))
-//
-//    validateRequest() { version, error in
-//      XCTAssertNil(error)
-//      XCTAssertNotNil(version)
-//    }
-//  }
+  func testFetchWhenResponseIsValid() {
+    stub(condition: isHost("example.com")) { _ in //isHost(VersionFileURL)) { _ in
+      return OHHTTPStubsResponse(
+        data: fixtureData("Versions"),
+        statusCode: 200,
+        headers: nil
+      )
+    }
+    validateRequest() { version, error in
+      XCTAssertNil(error)
+      XCTAssertNotNil(version)
+    }
+  }
 
   func testFetchWhenRequestReturnsNon200Status() {
-    stubRequest("GET", VersionFileURL as LSMatcheable!).andReturn(500)
+    stub(condition: isHost(VersionFileURL)) { _ in
+      return OHHTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
+    }
 
     validateRequest() { version, error in
       XCTAssertNotNil(error)
@@ -45,8 +47,9 @@ class DownloadServiceTests: XCTestCase {
   }
 
   func testFetchWhenRequestErrorsOut() {
-    stubRequest("GET", VersionFileURL as LSMatcheable!).andFailWithError(NSError(domain: "SomeDomain", code: 1, userInfo: nil))
-
+    stub(condition: isHost(VersionFileURL)) { _ in
+      return OHHTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
+    }
     validateRequest() { version, error in
       XCTAssertNotNil(error)
       XCTAssertNil(version)
