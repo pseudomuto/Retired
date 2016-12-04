@@ -22,7 +22,7 @@ class DownloadServiceTests: XCTestCase {
   }
 
   func testFetchWhenResponseIsValid() {
-    stub(condition: isHost("example.com")) { _ in //isHost(VersionFileURL)) { _ in
+    stub(condition: isHost("example.com")) { _ in
       return OHHTTPStubsResponse(
         data: fixtureData("Versions"),
         statusCode: 200,
