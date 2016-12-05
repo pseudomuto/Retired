@@ -22,7 +22,7 @@ class DownloadServiceTests: XCTestCase {
   }
 
   func testFetchWhenResponseIsValid() {
-    stub(condition: { request in return request.url!.absoluteString ==  VersionFileURL }) { _ in
+    stub(condition: stubCondition()) { _ in
       return OHHTTPStubsResponse(
         data: fixtureData("Versions"),
         statusCode: 200,
@@ -36,7 +36,7 @@ class DownloadServiceTests: XCTestCase {
   }
 
   func testFetchWhenRequestReturnsNon200Status() {
-    stub(condition: { request in return request.url!.absoluteString ==  VersionFileURL }) { _ in
+    stub(condition: stubCondition()) { _ in
       return OHHTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
     }
 
@@ -47,7 +47,7 @@ class DownloadServiceTests: XCTestCase {
   }
 
   func testFetchWhenRequestErrorsOut() {
-    stub(condition: { request in return request.url!.absoluteString ==  VersionFileURL }) { _ in
+    stub(condition: stubCondition()) { _ in
       return OHHTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
     }
     validateRequest() { version, error in
@@ -65,5 +65,9 @@ class DownloadServiceTests: XCTestCase {
     }
 
     waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  fileprivate func stubCondition() -> OHHTTPStubsTestBlock {
+    return { request in return request.url!.absoluteString ==  VersionFileURL }
   }
 }
