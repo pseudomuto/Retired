@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode7.3
+osx_image: xcode8.1
 rvm:
   - 2.2.3
 
@@ -11,11 +11,15 @@ notifications:
 
 xcode_project: Retired.xcodeproj
 xcode_scheme: Retired iOS
-xcode_sdk: iphonesimulator9.3
+xcode_sdk: iphonesimulator10.1
 
 before_install:
   - brew update
-  - brew install carthage
+  - brew outdated carthage || brew upgrade carthage
 
 before_script:
   - carthage bootstrap --platform iOS
+
+script:
+  - xcodebuild clean build-for-testing -project Retired.xcodeproj -scheme Retired\ iOS -sdk iphonesimulator10.1
+  - xcodebuild test-without-building -project Retired.xcodeproj -scheme Retired\ iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.1'
