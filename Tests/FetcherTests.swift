@@ -85,7 +85,7 @@ class FetcherTests: XCTestCase {
   }
 
   fileprivate func stubVersionsWith(_ name: String) {
-    stub(condition: isMethodGET()) { _ in 
+    stub(condition: { request in return request.url!.absoluteString ==  self.versionURL }) { _ in
       return OHHTTPStubsResponse(
         data: fixtureData(name),
         statusCode: 200,
