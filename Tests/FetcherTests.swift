@@ -62,7 +62,7 @@ class FetcherTests: XCTestCase {
   }
 
   func testCheckWhenErrorOccurs() {
-    stub(condition: isHost(versionURL)) { _ in
+    stub(condition: { request in return request.url!.absoluteString ==  self.versionURL }) { _ in
       return OHHTTPStubsResponse(error: NSError(domain: "err", code: 1, userInfo: nil))
     }
 
