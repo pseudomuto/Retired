@@ -73,7 +73,7 @@ class FetcherTests: XCTestCase {
     }
   }
 
-  fileprivate func assertResult(_ completion: @escaping (Bool, Message?, NSError?) -> Void) {
+  private func assertResult(_ completion: @escaping (Bool, Message?, NSError?) -> Void) {
     let expectation = self.expectation(description: "Check")
 
     fetcher!.check() { forcedUpdate, message, error in
@@ -84,7 +84,7 @@ class FetcherTests: XCTestCase {
     waitForExpectations(timeout: 0.5, handler: nil)
   }
 
-  fileprivate func stubVersionsWith(_ name: String) {
+  private func stubVersionsWith(_ name: String) {
     stub(condition: { request in return request.url!.absoluteString ==  self.versionURL }) { _ in
       return OHHTTPStubsResponse(
         data: fixtureData(name),

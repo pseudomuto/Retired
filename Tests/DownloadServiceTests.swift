@@ -56,7 +56,7 @@ class DownloadServiceTests: XCTestCase {
     }
   }
 
-  fileprivate func validateRequest(_ block: @escaping (VersionFile?, NSError?) -> Void) {
+  private func validateRequest(_ block: @escaping (VersionFile?, NSError?) -> Void) {
     let expectation = self.expectation(description: "Download")
 
     service.fetch() { version, error in
@@ -67,7 +67,7 @@ class DownloadServiceTests: XCTestCase {
     waitForExpectations(timeout: 0.5, handler: nil)
   }
 
-  fileprivate func stubCondition() -> OHHTTPStubsTestBlock {
+  private func stubCondition() -> OHHTTPStubsTestBlock {
     return { request in return request.url!.absoluteString ==  VersionFileURL }
   }
 }

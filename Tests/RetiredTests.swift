@@ -82,9 +82,9 @@ class RetiredTests: XCTestCase {
   }
 
   class TestFetcher: FileFetcher {
-    fileprivate(set) var called = false
+    private(set) var called = false
 
-    fileprivate let forced: Bool
+    private let forced: Bool
 
     init(forcedUpdate: Bool = false) {
       forced = forcedUpdate

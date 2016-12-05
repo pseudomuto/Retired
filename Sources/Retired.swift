@@ -53,7 +53,7 @@ open class Retired {
     nextRequestDate.value = nil
   }
 
-  fileprivate static func suppressionWindowLapsed() -> Bool {
+  private static func suppressionWindowLapsed() -> Bool {
     if let suppressionDate = nextRequestDate.value {
       return suppressionDate.compare(Date()) != .orderedDescending
     }

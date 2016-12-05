@@ -42,7 +42,7 @@ class Fetcher: FileFetcher {
     }
   }
 
-  fileprivate func currentVersion() -> String {
+  private func currentVersion() -> String {
     return bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
   }
 }

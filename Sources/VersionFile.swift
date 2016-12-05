@@ -7,7 +7,7 @@
 //
 
 public struct VersionFile {
-  fileprivate struct Constants {
+  private struct Constants {
     static let messagingAttribute          = "messaging"
     static let forcedMessageAttribute      = "forced"
     static let recommendedMessageAttribute = "recommended"

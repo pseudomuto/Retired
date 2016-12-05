@@ -25,11 +25,11 @@ private let session: URLSession = {
 class DownloadService {
   typealias VersionBlock = (VersionFile?, NSError?) -> Void
 
-  fileprivate struct Constants {
+  private struct Constants {
     static let errorDomain = "RetiredDownloadError"
   }
 
-  fileprivate let url: URL
+  private let url: URL
 
   init(url: URL) {
     self.url = url
@@ -51,7 +51,7 @@ class DownloadService {
     task.resume()
   }
 
-  fileprivate func foundError(_ error: NSError?, completion: VersionBlock) -> Bool {
+  private func foundError(_ error: NSError?, completion: VersionBlock) -> Bool {
     if let error = error {
       completion(nil, error)
       return true
@@ -60,7 +60,7 @@ class DownloadService {
     return false
   }
 
-  fileprivate func foundInvalidResponse(_ response: URLResponse, completion: VersionBlock) -> Bool {
+  private func foundInvalidResponse(_ response: URLResponse, completion: VersionBlock) -> Bool {
     let httpResponse = response as! HTTPURLResponse
 
     if httpResponse.statusCode / 100 != 2 {

@@ -7,8 +7,8 @@
 //
 
 public struct StoredSetting<T: AnyObject> {
-  fileprivate let key: String
-  fileprivate let settings: UserDefaults
+  private let key: String
+  private let settings: UserDefaults
 
   public var value: T? {
     get {

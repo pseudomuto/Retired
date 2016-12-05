@@ -29,7 +29,7 @@ public enum VersionPolicy: RawRepresentable {
 }
 
 public struct Version {
-  fileprivate struct Constants {
+  private struct Constants {
     static let versionAttribute = "version"
     static let policyAttribute  = "policy"
   }
