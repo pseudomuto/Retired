@@ -6,7 +6,7 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
-import Nocilla
+import OHHTTPStubs
 import XCTest
 
 @testable import Retired
@@ -16,19 +16,19 @@ private let VersionFileURL = "https://example.com/versions.json"
 class DownloadServiceTests: XCTestCase {
   let service = DownloadService(string: VersionFileURL)
 
-  override func setUp() {
-    LSNocilla.sharedInstance().start()
-  }
-
   override func tearDown() {
-    LSNocilla.sharedInstance().stop()
+    OHHTTPStubs.removeAllStubs()
+    super.tearDown()
   }
 
   func testFetchWhenResponseIsValid() {
-    stubRequest("GET", VersionFileURL)
-      .andReturn(200)
-      .withBody(String(data: fixtureData("Versions"), encoding: NSUTF8StringEncoding))
-
+    stub(condition: stubCondition()) { _ in
+      return OHHTTPStubsResponse(
+        data: fixtureData("Versions"),
+        statusCode: 200,
+        headers: nil
+      )
+    }
     validateRequest() { version, error in
       XCTAssertNil(error)
       XCTAssertNotNil(version)
@@ -36,7 +36,9 @@ class DownloadServiceTests: XCTestCase {
   }
 
   func testFetchWhenRequestReturnsNon200Status() {
-    stubRequest("GET", VersionFileURL).andReturn(500)
+    stub(condition: stubCondition()) { _ in
+      return OHHTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
+    }
 
     validateRequest() { version, error in
       XCTAssertNotNil(error)
@@ -45,22 +47,27 @@ class DownloadServiceTests: XCTestCase {
   }
 
   func testFetchWhenRequestErrorsOut() {
-    stubRequest("GET", VersionFileURL).andFailWithError(NSError(domain: "SomeDomain", code: 1, userInfo: nil))
-
+    stub(condition: stubCondition()) { _ in
+      return OHHTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
+    }
     validateRequest() { version, error in
       XCTAssertNotNil(error)
       XCTAssertNil(version)
     }
   }
 
-  private func validateRequest(block: (VersionFile?, NSError?) -> Void) {
-    let expectation = expectationWithDescription("Download")
+  private func validateRequest(_ block: @escaping (VersionFile?, NSError?) -> Void) {
+    let expectation = self.expectation(description: "Download")
 
     service.fetch() { version, error in
       block(version, error)
       expectation.fulfill()
     }
 
-    waitForExpectationsWithTimeout(0.5, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  private func stubCondition() -> OHHTTPStubsTestBlock {
+    return { request in return request.url!.absoluteString ==  VersionFileURL }
   }
 }

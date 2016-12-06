@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/Retired.svg?style=flat)](http://cocoapods.org/pods/Retired)
 [![License](https://img.shields.io/cocoapods/l/Retired.svg?style=flat)](http://cocoapods.org/pods/Retired)
 [![Platform](https://img.shields.io/cocoapods/p/Retired.svg?style=flat)](http://cocoapods.org/pods/Retired)
+[![Tests](https://travis-ci.org/pseudomuto/Retired.svg?branch=master)](https://travis-ci.org/pseudomuto/Retired.svg?branch=master)
 
 A simple framework to help recommend/force app updates and sunset old versions
 

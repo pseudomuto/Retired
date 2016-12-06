@@ -8,18 +8,18 @@
 
 import Foundation
 
-private let timeout: NSTimeInterval = 20;
+private let timeout: TimeInterval = 20;
 
-private let session: NSURLSession = {
-  let config                        = NSURLSessionConfiguration.ephemeralSessionConfiguration()
-  config.HTTPCookieAcceptPolicy     = .Never
-  config.HTTPCookieStorage          = nil
-  config.HTTPShouldSetCookies       = false
-  config.requestCachePolicy         = .ReloadIgnoringLocalCacheData
+private let session: URLSession = {
+  let config                        = URLSessionConfiguration.ephemeral
+  config.httpCookieAcceptPolicy     = .never
+  config.httpCookieStorage          = nil
+  config.httpShouldSetCookies       = false
+  config.requestCachePolicy         = .reloadIgnoringLocalCacheData
   config.timeoutIntervalForRequest  = timeout
   config.timeoutIntervalForResource = timeout
 
-  return NSURLSession(configuration: config)
+  return URLSession(configuration: config)
 }()
 
 class DownloadService {
@@ -29,29 +29,29 @@ class DownloadService {
     static let errorDomain = "RetiredDownloadError"
   }
 
-  private let url: NSURL
+  private let url: URL
 
-  init(url: NSURL) {
+  init(url: URL) {
     self.url = url
   }
 
   convenience init(string: String) {
-    self.init(url: NSURL(string: string)!)
+    self.init(url: URL(string: string)!)
   }
 
-  func fetch(completion: VersionBlock) {
-    let task = session.dataTaskWithURL(url) { data, response, error in
-      guard self.foundError(error, completion: completion) == false else { return }
+  func fetch(_ completion: @escaping VersionBlock) {
+    let task = session.dataTask(with: url, completionHandler: { data, response, error in
+      guard self.foundError(error as NSError?, completion: completion) == false else { return }
       guard self.foundInvalidResponse(response!, completion: completion) == false else { return }
 
-      let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
-      completion(VersionFile(json: json), nil)
-    }
+      let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+      completion(VersionFile(json: json as AnyObject), nil)
+    }) 
 
     task.resume()
   }
 
-  private func foundError(error: NSError?, completion: VersionBlock) -> Bool {
+  private func foundError(_ error: NSError?, completion: VersionBlock) -> Bool {
     if let error = error {
       completion(nil, error)
       return true
@@ -60,8 +60,8 @@ class DownloadService {
     return false
   }
 
-  private func foundInvalidResponse(response: NSURLResponse, completion: VersionBlock) -> Bool {
-    let httpResponse = response as! NSHTTPURLResponse
+  private func foundInvalidResponse(_ response: URLResponse, completion: VersionBlock) -> Bool {
+    let httpResponse = response as! HTTPURLResponse
 
     if httpResponse.statusCode / 100 != 2 {
       let err = NSError(domain: Constants.errorDomain, code: httpResponse.statusCode, userInfo: nil)

@@ -7,23 +7,23 @@
 //
 
 public enum VersionPolicy: RawRepresentable {
-  case Force, Recommend, None
+  case force, recommend, none
 
   public typealias RawValue = String
 
   public var rawValue: RawValue {
     switch self {
-    case .Force: return "force"
-    case .Recommend: return "recommend"
+    case .force: return "force"
+    case .recommend: return "recommend"
     default: return "none"
     }
   }
 
   public init?(rawValue: RawValue) {
-    switch rawValue.lowercaseString {
-    case "force": self = .Force
-    case "recommend": self = .Recommend
-    default: self = .None
+    switch rawValue.lowercased() {
+    case "force": self = .force
+    case "recommend": self = .recommend
+    default: self = .none
     }
   }
 }

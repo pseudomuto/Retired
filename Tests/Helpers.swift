@@ -9,19 +9,19 @@
 import Foundation
 import XCTest
 
-func fixtureData(name: String) -> NSData {
-  let bundle = NSBundle(forClass: MessageTests.self)
-  let path   = bundle.pathForResource(name, ofType: "json")!
+func fixtureData(_ name: String) -> Data {
+  let bundle = Bundle(for: MessageTests.self)
+  let path   = bundle.path(forResource: name, ofType: "json")!
 
-  return NSData(contentsOfFile: path)!
+  return (try! Data(contentsOf: URL(fileURLWithPath: path)))
 }
 
-func jsonFixture(name: String) -> AnyObject {
+func jsonFixture(_ name: String) -> AnyObject {
   let data = fixtureData(name)
-  return try! NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+  return try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as AnyObject
 }
 
-func XCTAssertThrows<T: ErrorType>(error: T, expression: () throws -> Void) {
+func XCTAssertThrows<T: Error>(_ error: T, expression: () throws -> Void) {
   do {
     try expression()
   }
@@ -29,6 +29,6 @@ func XCTAssertThrows<T: ErrorType>(error: T, expression: () throws -> Void) {
     XCTAssertNotNil(err)
   }
   catch let err {
-    XCTFail("Expected \(T.self), but got \(err.dynamicType)")
+    XCTFail("Expected \(T.self), but got \(type(of: err))")
   }
 }

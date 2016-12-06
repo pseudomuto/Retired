@@ -12,8 +12,8 @@ import XCTest
 class RetiredTests: XCTestCase {
   var fetcher = TestFetcher()
 
-  lazy var future = NSDate(timeIntervalSinceNow: 50)
-  lazy var past   = NSDate(timeIntervalSinceNow: -1)
+  lazy var future = Date(timeIntervalSinceNow: 50) as NSDate
+  lazy var past   = Date(timeIntervalSinceNow: -1) as NSDate
 
   override func setUp() {
     Retired.fetcher = fetcher
@@ -26,7 +26,7 @@ class RetiredTests: XCTestCase {
   func testCheckWhenNotConfigured() {
     Retired.fetcher = nil
 
-    XCTAssertThrows(RetiredError.NotConfigured) {
+    XCTAssertThrows(RetiredError.notConfigured) {
       try Retired.check() { _, _, _ in }
     }
   }
@@ -90,7 +90,7 @@ class RetiredTests: XCTestCase {
       forced = forcedUpdate
     }
 
-    func check(completion: RetiredCompletion) {
+    func check(_ completion: @escaping RetiredCompletion) {
       called = true
       completion(forced, nil, nil)
     }

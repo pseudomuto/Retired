@@ -9,14 +9,14 @@
 import Retired
 import XCTest
 
-private func createVersionJSON(version: String, policy: String) -> AnyObject {
+private func createVersionJSON(_ version: String, policy: String) -> AnyObject {
   let json = "{ \"version\": \"\(version)\", \"policy\": \"\(policy)\" }"
-  return try! createJSONObject(json)
+  return try! createJSONObject(json) as AnyObject
 }
 
-private func createJSONObject(json: String) throws -> AnyObject {
-  let data = json.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-  return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+private func createJSONObject(_ json: String) throws -> Any {
+  let data = json.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+  return try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
 }
 
 class VersionTests: XCTestCase {
@@ -29,11 +29,11 @@ class VersionTests: XCTestCase {
 
   func testInitializerParsesPolicyCorrectly() {
     let expectations = [
-      "force": VersionPolicy.Force,
-      "recommend": VersionPolicy.Recommend,
-      "REcommend": VersionPolicy.Recommend,
-      "none": VersionPolicy.None,
-      "other": VersionPolicy.None
+      "force": VersionPolicy.force,
+      "recommend": VersionPolicy.recommend,
+      "REcommend": VersionPolicy.recommend,
+      "none": VersionPolicy.none,
+      "other": VersionPolicy.none
     ]
 
     for (key, value) in expectations {

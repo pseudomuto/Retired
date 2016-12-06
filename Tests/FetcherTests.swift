@@ -6,23 +6,23 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
-import Nocilla
+import OHHTTPStubs
 @testable import Retired
 import XCTest
 
 class FetcherTests: XCTestCase {
-  let versionURL = "https://example.com/versions.json"
-  let bundle = NSBundle(forClass: RetiredTests.self)
+  let versionURL = "https:example.com/versions.json"
+  let bundle = Bundle(for: RetiredTests.self)
 
   var fetcher: Fetcher?
 
   override func setUp() {
-    LSNocilla.sharedInstance().start()
-    fetcher = Fetcher(url: NSURL(string: versionURL)!, bundle: bundle)
+    fetcher = Fetcher(url: URL(string: versionURL)!, bundle: bundle)
   }
 
   override func tearDown() {
-    LSNocilla.sharedInstance().stop()
+    OHHTTPStubs.removeAllStubs()
+    super.tearDown()
   }
 
   func testCheckWhenForcedUpdateRequired() {
@@ -62,7 +62,9 @@ class FetcherTests: XCTestCase {
   }
 
   func testCheckWhenErrorOccurs() {
-    stubRequest("GET", versionURL).andFailWithError(NSError(domain: "err", code: 1, userInfo: nil))
+    stub(condition: { request in return request.url!.absoluteString ==  self.versionURL }) { _ in
+      return OHHTTPStubsResponse(error: NSError(domain: "err", code: 1, userInfo: nil))
+    }
 
     assertResult { forcedUpdate, message, error in
       XCTAssertFalse(forcedUpdate)
@@ -71,20 +73,24 @@ class FetcherTests: XCTestCase {
     }
   }
 
-  private func assertResult(completion: (Bool, Message?, NSError?) -> Void) {
-    let expectation = expectationWithDescription("Check")
+  private func assertResult(_ completion: @escaping (Bool, Message?, NSError?) -> Void) {
+    let expectation = self.expectation(description: "Check")
 
     fetcher!.check() { forcedUpdate, message, error in
       completion(forcedUpdate, message, error)
       expectation.fulfill()
     }
 
-    waitForExpectationsWithTimeout(0.5, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
-  private func stubVersionsWith(name: String) {
-    stubRequest("GET", versionURL)
-      .andReturn(200)
-      .withBody(String(data: fixtureData(name), encoding: NSUTF8StringEncoding))
+  private func stubVersionsWith(_ name: String) {
+    stub(condition: { request in return request.url!.absoluteString ==  self.versionURL }) { _ in
+      return OHHTTPStubsResponse(
+        data: fixtureData(name),
+        statusCode: 200,
+        headers: nil
+      )
+    }
   }
 }
