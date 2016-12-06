@@ -15,7 +15,7 @@ A simple framework to help recommend/force app updates and sunset old versions
 Add the following to your Cartfile:
 
 ```
-github "pseudomuto/Retired" ~> 2.0
+github "pseudomuto/Retired" ~> 3.0
 ```
 
 ### Cocoapods
@@ -23,7 +23,7 @@ github "pseudomuto/Retired" ~> 2.0
 Add this to your Podfile:
 
 ```
-pod "Retired", "~> 2.0"
+pod "Retired", "~> 3.0"
 ```
 
 ### Swift Package Manager
@@ -37,7 +37,7 @@ let package = Package(
   ...
   ...
   dependencies: [
-    .Package(url: "https://github.com/pseudomuto/Retired.git", majorVersion: 2)
+    .Package(url: "https://github.com/pseudomuto/Retired.git", majorVersion: 3)
   ],
   ...
   ...

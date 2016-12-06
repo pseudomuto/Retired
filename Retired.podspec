@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = "Retired"
-  s.version  = "2.0.0"
+  s.version  = "3.0.0"
   s.summary  = "A simple framework to help recommend/force app updates and sunset old versions"
   s.homepage = "https://github.com/pseudomuto/Retired"
   s.license  = "MIT"
