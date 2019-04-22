@@ -19,7 +19,7 @@ open class Retired {
   static var suppressionInterval: TimeInterval = 0
   static var nextRequestDate = StoredSetting<NSDate>(name: "nextRequestDate")
 
-  open static func configure(
+  public static func configure(
     _ url: URL,
     suppressionInterval: TimeInterval = 0,
     bundle: Bundle = Bundle.main) {
@@ -27,7 +27,7 @@ open class Retired {
       self.fetcher             = Fetcher(url: url, bundle: bundle)
   }
 
-  open static func check(_ completion: @escaping RetiredCompletion) throws {
+  public static func check(_ completion: @escaping RetiredCompletion) throws {
     guard let fetcher = fetcher else { throw RetiredError.notConfigured }
 
     fetcher.check() { forcedUpdate, message, error in
@@ -49,7 +49,7 @@ open class Retired {
     }
   }
 
-  open static func clearSuppressionInterval() {
+  public static func clearSuppressionInterval() {
     nextRequestDate.value = nil
   }
 
