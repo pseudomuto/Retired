@@ -7,7 +7,18 @@ let package = Package(
   name: "Retired",
   products: [
     .library(
-      name: "Retired",
-      targets: ["Retired"])
+      name: "Retired iOS",
+      targets: ["Retired iOS"])
+  ],
+  targets: [
+    .target(
+      name: "Retired iOS",
+      dependencies: []
+    ),
+    .testTarget(
+      name: "Retired iOSTests",
+      dependencies: ["Retired iOS"],
+      path: "Tests"
+    )
   ]
 )
