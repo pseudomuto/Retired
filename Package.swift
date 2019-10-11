@@ -7,7 +7,7 @@ let package = Package(
   name: "Retired",
   products: [
     .library(
-      name: "Retired iOS",
-      targets: ["Retired iOS"])
+      name: "Retired",
+      targets: ["Retired"])
   ]
 )
