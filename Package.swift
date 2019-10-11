@@ -13,7 +13,8 @@ let package = Package(
   targets: [
     .target(
       name: "Retired iOS",
-      dependencies: []
+      dependencies: [],
+      path: "Sources"
     ),
     .testTarget(
       name: "Retired iOSTests",
