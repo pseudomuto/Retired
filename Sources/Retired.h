@@ -6,7 +6,7 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
-@import Foundation;
+#import <UIKit/UIKit.h>
 
 //! Project version number for Retired iOS.
 FOUNDATION_EXPORT double RetiredVersionNumber;
