@@ -6,6 +6,8 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
+import Foundation
+
 public typealias RetiredCompletion = (Bool, Message?, NSError?) -> Void
 
 public let RetiredErrorDomain = "RetiredError"

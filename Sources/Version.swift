@@ -6,6 +6,8 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
+import Foundation
+
 public enum VersionPolicy: RawRepresentable {
   case force, recommend, none
 

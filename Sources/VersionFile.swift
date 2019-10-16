@@ -6,6 +6,8 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
+import Foundation
+
 public struct VersionFile {
   private struct Constants {
     static let messagingAttribute          = "messaging"

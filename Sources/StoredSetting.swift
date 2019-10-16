@@ -6,6 +6,8 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
+import Foundation
+
 public struct StoredSetting<T: AnyObject> {
   private let key: String
   private let settings: UserDefaults
@@ -26,7 +28,7 @@ public struct StoredSetting<T: AnyObject> {
   }
 
   public init(name: String, container: UserDefaults = UserDefaults.standard) {
-    key      = name
+    key = name
     settings = container
   }
 
