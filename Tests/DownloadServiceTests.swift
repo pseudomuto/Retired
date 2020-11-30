@@ -7,6 +7,7 @@
 //
 
 import OHHTTPStubs
+import OHHTTPStubsSwift
 import XCTest
 
 @testable import Retired
@@ -17,13 +18,13 @@ class DownloadServiceTests: XCTestCase {
   let service = DownloadService(string: VersionFileURL)
 
   override func tearDown() {
-    OHHTTPStubs.removeAllStubs()
+    HTTPStubs.removeAllStubs()
     super.tearDown()
   }
 
   func testFetchWhenResponseIsValid() {
-    stub(condition: stubCondition()) { _ in
-      return OHHTTPStubsResponse(
+    stub(condition: stubCondition) { _ in
+      return HTTPStubsResponse(
         data: fixtureData("Versions"),
         statusCode: 200,
         headers: nil
@@ -36,8 +37,8 @@ class DownloadServiceTests: XCTestCase {
   }
 
   func testFetchWhenRequestReturnsNon200Status() {
-    stub(condition: stubCondition()) { _ in
-      return OHHTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
+    stub(condition: stubCondition) { _ in
+      return HTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
     }
 
     validateRequest() { version, error in
@@ -47,8 +48,8 @@ class DownloadServiceTests: XCTestCase {
   }
 
   func testFetchWhenRequestErrorsOut() {
-    stub(condition: stubCondition()) { _ in
-      return OHHTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
+    stub(condition: stubCondition) { _ in
+      return HTTPStubsResponse(data: Data(), statusCode: 500, headers: nil)
     }
     validateRequest() { version, error in
       XCTAssertNotNil(error)
@@ -67,7 +68,7 @@ class DownloadServiceTests: XCTestCase {
     waitForExpectations(timeout: 0.5, handler: nil)
   }
 
-  private func stubCondition() -> OHHTTPStubsTestBlock {
-    return { request in return request.url!.absoluteString ==  VersionFileURL }
+  private var stubCondition: HTTPStubsTestBlock {
+    { request in return request.url!.absoluteString == VersionFileURL }
   }
 }

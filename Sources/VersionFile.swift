@@ -6,6 +6,8 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
+import Foundation
+
 public struct VersionFile {
   private struct Constants {
     static let messagingAttribute          = "messaging"
@@ -29,7 +31,7 @@ public struct VersionFile {
 
   func findVersion(_ versionString: String) -> Version? {
     let strings = versions.map { $0.versionString }
-    guard let index = strings.index(of: versionString) else { return nil }
+    guard let index = strings.firstIndex(of: versionString) else { return nil }
 
     return versions[index]
   }

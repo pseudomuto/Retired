@@ -7,6 +7,7 @@
 //
 
 import OHHTTPStubs
+import OHHTTPStubsSwift
 @testable import Retired
 import XCTest
 
@@ -21,7 +22,7 @@ class FetcherTests: XCTestCase {
   }
 
   override func tearDown() {
-    OHHTTPStubs.removeAllStubs()
+    HTTPStubs.removeAllStubs()
     super.tearDown()
   }
 
@@ -63,7 +64,7 @@ class FetcherTests: XCTestCase {
 
   func testCheckWhenErrorOccurs() {
     stub(condition: { request in return request.url!.absoluteString ==  self.versionURL }) { _ in
-      return OHHTTPStubsResponse(error: NSError(domain: "err", code: 1, userInfo: nil))
+      return HTTPStubsResponse(error: NSError(domain: "err", code: 1, userInfo: nil))
     }
 
     assertResult { forcedUpdate, message, error in
@@ -86,7 +87,7 @@ class FetcherTests: XCTestCase {
 
   private func stubVersionsWith(_ name: String) {
     stub(condition: { request in return request.url!.absoluteString ==  self.versionURL }) { _ in
-      return OHHTTPStubsResponse(
+      return HTTPStubsResponse(
         data: fixtureData(name),
         statusCode: 200,
         headers: nil

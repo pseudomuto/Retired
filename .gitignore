@@ -3,6 +3,8 @@
 
 # Xcode
 build/
+.build/
+.swiftpm
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -21,3 +23,4 @@ DerivedData
 
 # Local Deps
 Carthage/
+xcuserdata/

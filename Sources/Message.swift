@@ -6,6 +6,8 @@
 //  Copyright © 2016 pseudomuto. All rights reserved.
 //
 
+import Foundation
+
 public struct Message {
   private struct Constants {
     static let titleAttribute              = "title"
